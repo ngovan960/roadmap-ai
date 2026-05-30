@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="roadmap-section">
+    <div class="container">
+        <!-- Level 1: Roadmap Overview -->
+        <div class="roadmap-header">
+            <h1>🗺️ {{ roadmap.overview }}</h1>
+            <div class="roadmap-meta">
+                <span>👤 {{ roadmap.age }} tuổi</span>
+                <span>📚 {{ roadmap.level }}</span>
+                <span>🎯 {{ roadmap.goal }}</span>
+                <span>⏱️ {{ roadmap.duration_months }} tháng</span>
+            </div>
+            
+            <div class="roadmap-stats">
+                <div class="stat-card">
+                    <div class="stat-number">{{ roadmap.total_weeks }}</div>
+                    <div class="stat-label">Tuần</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ roadmap.phases|length }}</div>
+                    <div class="stat-label">Phases</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ roadmap.total_tasks }}</div>
+                    <div class="stat-label">Tasks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ roadmap.total_hours }}</div>
+                    <div class="stat-label">Giờ học</div>
+                </div>
+            </div>
+            
+            {% if roadmap.salary_range %}
+            <div class="roadmap-salary">
+                <h3>💰 Mức lương (VNĐ/tháng)</h3>
+                <div class="salary-bars">
+                    <div class="salary-item">
+                        <span class="salary-label">Junior</span>
+                        <span class="salary-value">{{ roadmap.salary_range.get('junior', 'N/A') }}</span>
+                    </div>
+                    <div class="salary-item">
+                        <span class="salary-label">Mid</span>
+                        <span class="salary-value">{{ roadmap.salary_range.get('mid', 'N/A') }}</span>
+                    </div>
+                    <div class="salary-item">
+                        <span class="salary-label">Senior</span>
+                        <span class="salary-value">{{ roadmap.salary_range.get('senior', 'N/A') }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Progress -->
+        <div class="progress-section">
+            <h3>📊 Tiến độ</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+            <span class="progress-text" id="progress-text">0% hoàn thành</span>
+        </div>
+        
+        <!-- Phases -->
+        <div class="phases-section">
+            <h2>📋 Các giai đoạn học tập</h2>
+            
+            {% for phase in roadmap.phases %}
+            <div class="phase-card" id="phase-{{ phase.id }}">
+                <!-- Phase Header -->
+                <div class="phase-header" onclick="togglePhase('{{ phase.id }}')">
+                    <div class="phase-title">
+                        <span class="phase-toggle" id="toggle-{{ phase.id }}">▶</span>
+                        <h3>{{ phase.name }}</h3>
+                        <span class="phase-duration">{{ phase.duration }}</span>
+                    </div>
+                    <div class="phase-meta">
+                        <span>{{ phase.modules|length if phase.modules else 0 }} modules</span>
+                        <span>{{ phase.get('total_hours', 0) }} giờ</span>
+                    </div>
+                </div>
+                
+                <!-- Phase Content -->
+                <div class="phase-content" id="content-{{ phase.id }}" style="display: none;">
+                    <p class="phase-description">{{ phase.description }}</p>
+                    
+                    {% if phase.skills %}
+                    <div class="phase-skills">
+                        {% for skill in phase.skills %}
+                        <span class="skill-tag">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if phase.milestone %}
+                    <div class="phase-milestone">
+                        <strong>🎯 Milestone:</strong> {{ phase.milestone }}
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Modules -->
+                    {% if phase.modules %}
+                    <div class="modules-section">
+                        {% for module in phase.modules %}
+                        <div class="module-card" id="module-{{ module.id }}">
+                            <div class="module-header" onclick="toggleModule('{{ module.id }}')">
+                                <div class="module-title">
+                                    <span class="module-toggle" id="toggle-{{ module.id }}">▶</span>
+                                    <h4>{{ module.name }}</h4>
+                                </div>
+                                <span class="module-meta">{{ module.tasks|length if module.tasks else 0 }} tasks</span>
+                            </div>
+                            
+                            <div class="module-content" id="content-{{ module.id }}" style="display: none;">
+                                <p class="module-description">{{ module.description }}</p>
+                                
+                                <!-- Tasks -->
+                                {% if module.tasks %}
+                                <div class="tasks-section">
+                                    {% for task in module.tasks %}
+                                    <div class="task-item" id="task-{{ task.id }}">
+                                        <!-- Task Header -->
+                                        <div class="task-header">
+                                            <label class="task-checkbox">
+                                                <input type="checkbox" data-task-id="{{ task.id }}" onchange="toggleTask('{{ task.id }}')">
+                                                <span class="checkbox-custom"></span>
+                                            </label>
+                                            <div class="task-info">
+                                                <h5 class="task-name">{{ task.name }}</h5>
+                                                <span class="task-days">{{ task.days }}</span>
+                                                <span class="task-hours">{{ task.hours }} giờ</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Task Details -->
+                                        <div class="task-details">
+                                            <!-- Resource -->
+                                            {% if task.resource %}
+                                            <div class="task-resource">
+                                                <span class="resource-icon">📖</span>
+                                                <a href="{{ task.resource.url }}" target="_blank" class="resource-link">
+                                                    {{ task.resource.name }}
+                                                </a>
+                                                <span class="resource-type">{{ task.resource.type }}</span>
+                                            </div>
+                                            {% endif %}
+                                            
+                                            <!-- Exercise -->
+                                            {% if task.exercise %}
+                                            <div class="task-exercise">
+                                                <span class="exercise-icon">📝</span>
+                                                <div class="exercise-info">
+                                                    <strong>{{ task.exercise.title }}</strong>
+                                                    <p>{{ task.exercise.description }}</p>
+                                                    {% if task.exercise.deliverable %}
+                                                    <span class="exercise-deliverable">📦 {{ task.exercise.deliverable }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            
+                                            <!-- Checklist -->
+                                            {% if task.checklist %}
+                                            <div class="task-checklist">
+                                                <span class="checklist-icon">✅</span>
+                                                <div class="checklist-items">
+                                                    {% for item in task.checklist %}
+                                                    <label class="checklist-item">
+                                                        <input type="checkbox" data-checklist="{{ task.id }}-{{ loop.index }}">
+                                                        <span>{{ item }}</span>
+                                                    </label>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Share & Actions -->
+        <div class="actions-section">
+            <button onclick="copyLink()" class="btn btn-secondary">📋 Copy link</button>
+            <button onclick="shareFacebook()" class="btn btn-secondary">📘 Facebook</button>
+            <a href="/tao-roadmap" class="btn btn-primary">🗺️ Tạo roadmap mới</a>
+        </div>
+        
+        <!-- Feedback -->
+        <div class="feedback-section">
+            <h3>Roadmap này có hữu ích không?</h3>
+            <div class="feedback-buttons">
+                <button onclick="submitFeedback(true)" class="btn btn-positive">👍 Hữu ích</button>
+                <button onclick="submitFeedback(false)" class="btn btn-negative">👎 Cần cải thiện</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+const ROADMAP_SLUG = "{{ slug }}";
+</script>
+{% endblock %}

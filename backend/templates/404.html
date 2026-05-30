@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="error-section">
+    <div class="container">
+        <div class="error-content">
+            <div class="error-icon">🔍</div>
+            <h1>Không tìm thấy roadmap</h1>
+            <p>Roadmap bạn tìm không tồn tại hoặc đã bị xóa.</p>
+            <div class="error-actions">
+                <a href="/tao-roadmap" class="btn btn-primary">Tạo roadmap mới</a>
+                <a href="/" class="btn btn-secondary">Về trang chủ</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.error-section {
+    padding: 100px 0;
+    text-align: center;
+}
+
+.error-content {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.error-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+}
+
+.error-content h1 {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.error-content p {
+    color: var(--text-secondary);
+    font-size: 16px;
+    margin-bottom: 32px;
+}
+
+.error-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+</style>
+{% endblock %}

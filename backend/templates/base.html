@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ page_description }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo">
+                <span class="logo-icon">🗺️</span>
+                <span class="logo-text">AI Career Roadmap</span>
+            </a>
+            <nav class="nav">
+                <a href="/tao-roadmap" class="btn btn-primary">Tạo Roadmap</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">🗺️</span>
+                    <span class="logo-text">AI Career Roadmap</span>
+                    <p class="footer-desc">Tạo lộ trình học tập cá nhân hóa bằng AI</p>
+                </div>
+                <div class="footer-links">
+                    <a href="/">Trang chủ</a>
+                    <a href="/tao-roadmap">Tạo Roadmap</a>
+                    <a href="/nganh/backend-developer">Backend Developer</a>
+                    <a href="/nganh/frontend-developer">Frontend Developer</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI Career Roadmap. Made with ❤️ in Vietnam</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <span class="theme-toggle-icon">🌙</span>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="/static/js/app.js"></script>
+    
+    <!-- Google Analytics placeholder -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
+</body>
+</html>

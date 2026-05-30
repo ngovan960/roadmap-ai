@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Tạo lộ trình học tập<br>
+                <span class="highlight">cá nhân hóa bằng AI</span>
+            </h1>
+            <p class="hero-subtitle">
+                Nhập thông tin, AI tạo roadmap riêng cho bạn theo 3 cấp:<br>
+                <strong>Tổng quan → Giai đoạn → Tasks hàng ngày</strong>
+            </p>
+            <div class="hero-actions">
+                <a href="/tao-roadmap" class="btn btn-primary btn-large">
+                    🎯 Bắt đầu ngay
+                </a>
+                <p class="hero-note">Miễn phí · Không cần đăng nhập · ~30 giây</p>
+            </div>
+            <div class="social-proof" id="social-proof">
+                <!-- Dynamic social proof loaded by JS -->
+                <div class="feature-highlights">
+                    <div class="feature-item">
+                        <span class="feature-icon">🎯</span>
+                        <span class="feature-text">Cá nhân hóa 100%</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📊</span>
+                        <span class="feature-text">3 cấp: Tổng quan → Giai đoạn → Tasks</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🆓</span>
+                        <span class="feature-text">Miễn phí, không cần đăng nhập</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+    <div class="container">
+        <h2 class="section-title">Cách hoạt động</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon">📝</div>
+                <h3>Nhập thông tin</h3>
+                <p>Chọn ngành, trình độ, mục tiêu và thời gian học</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon">🤖</div>
+                <h3>AI tạo roadmap</h3>
+                <p>AI phân tích và tạo lộ trình 3 cấp riêng cho bạn</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon">📚</div>
+                <h3>Học theo lộ trình</h3>
+                <p>Làm theo tasks hàng ngày, đánh dấu tiến độ</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Industries -->
+<section class="popular-industries">
+    <div class="container">
+        <h2 class="section-title">Ngành phổ biến</h2>
+        <div class="industries-grid">
+            <a href="/nganh/backend-developer" class="industry-card">
+                <div class="industry-icon">💻</div>
+                <h3>Backend Developer</h3>
+                <p>Python, Node.js, Database</p>
+                <span class="salary-range">15-60 triệu</span>
+            </a>
+            <a href="/nganh/frontend-developer" class="industry-card">
+                <div class="industry-icon">🎨</div>
+                <h3>Frontend Developer</h3>
+                <p>HTML, CSS, JavaScript, React</p>
+                <span class="salary-range">12-50 triệu</span>
+            </a>
+            <a href="/nganh/data-analyst" class="industry-card">
+                <div class="industry-icon">📊</div>
+                <h3>Data Analyst</h3>
+                <p>SQL, Python, Excel, Tableau</p>
+                <span class="salary-range">15-55 triệu</span>
+            </a>
+            <a href="/nganh/ai-engineer" class="industry-card">
+                <div class="industry-icon">🤖</div>
+                <h3>AI/ML Engineer</h3>
+                <p>Python, TensorFlow, PyTorch</p>
+                <span class="salary-range">20-80 triệu</span>
+            </a>
+            <a href="/nganh/digital-marketing" class="industry-card">
+                <div class="industry-icon">📱</div>
+                <h3>Digital Marketing</h3>
+                <p>SEO, Content, Ads, Analytics</p>
+                <span class="salary-range">10-40 triệu</span>
+            </a>
+            <a href="/nganh/ui-ux-designer" class="industry-card">
+                <div class="industry-icon">✨</div>
+                <h3>UI/UX Designer</h3>
+                <p>Figma, Adobe XD, Research</p>
+                <span class="salary-range">12-50 triệu</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Sẵn sàng tạo roadmap?</h2>
+        <p>Bắt đầu hành trình học tập ngay hôm nay</p>
+        <a href="/tao-roadmap" class="btn btn-primary btn-large">
+            Tạo roadmap ngay →
+        </a>
+    </div>
+</section>
+{% endblock %}

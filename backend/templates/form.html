@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="form-section">
+    <div class="container">
+        <div class="form-header">
+            <h1>🎯 Tạo roadmap của bạn</h1>
+            <p>Nhập thông tin để AI tạo lộ trình học tập cá nhân hóa</p>
+        </div>
+        
+        <form id="roadmap-form" class="roadmap-form" novalidate>
+            <!-- Field 1: Tuổi -->
+            <div class="form-group">
+                <label for="age">Tuổi <span class="required">*</span></label>
+                <input type="number" id="age" name="age" min="15" max="60" 
+                       placeholder="20" required>
+                <span class="form-hint">Từ 15 đến 60 tuổi</span>
+                <span class="form-error" id="age-error"></span>
+            </div>
+            
+            <!-- Field 2: Ngành -->
+            <div class="form-group">
+                <label for="industry">Ngành muốn học <span class="required">*</span></label>
+                <select id="industry" name="industry" required>
+                    <option value="">Chọn ngành...</option>
+                    {% for category, items in categories.items() %}
+                    <optgroup label="{{ category }}">
+                        {% for item in items %}
+                        <option value="{{ item.slug }}">{{ item.name }}</option>
+                        {% endfor %}
+                    </optgroup>
+                    {% endfor %}
+                </select>
+                <span class="form-error" id="industry-error"></span>
+            </div>
+            
+            <!-- Field 3: Trình độ -->
+            <div class="form-group">
+                <label>Trình độ hiện tại <span class="required">*</span></label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="level" value="beginner" required>
+                        <span class="radio-custom"></span>
+                        <span class="radio-title">Beginner</span>
+                        <span class="radio-desc">Chưa biết gì</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="level" value="junior">
+                        <span class="radio-custom"></span>
+                        <span class="radio-title">Junior</span>
+                        <span class="radio-desc">Biết cơ bản</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="level" value="mid">
+                        <span class="radio-custom"></span>
+                        <span class="radio-title">Mid</span>
+                        <span class="radio-desc">1-3 năm kinh nghiệm</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="level" value="senior">
+                        <span class="radio-custom"></span>
+                        <span class="radio-title">Senior</span>
+                        <span class="radio-desc">3+ năm kinh nghiệm</span>
+                    </label>
+                </div>
+                <span class="form-error" id="level-error"></span>
+            </div>
+            
+            <!-- Field 4: Mục tiêu -->
+            <div class="form-group">
+                <label for="goal">Mục tiêu <span class="required">*</span></label>
+                <textarea id="goal" name="goal" rows="3" 
+                          placeholder="VD: Senior Backend Dev trong 2 năm" 
+                          minlength="10" required></textarea>
+                <span class="form-hint">Tối thiểu 10 ký tự</span>
+                <span class="form-error" id="goal-error"></span>
+            </div>
+            
+            <!-- Field 5: Thời gian -->
+            <div class="form-group">
+                <label for="duration">Thời gian dự kiến <span class="required">*</span></label>
+                <select id="duration" name="duration" required>
+                    <option value="3">3 tháng</option>
+                    <option value="6" selected>6 tháng</option>
+                    <option value="12">12 tháng</option>
+                    <option value="24">24 tháng</option>
+                </select>
+                <span class="form-error" id="duration-error"></span>
+            </div>
+            
+            <!-- Field 6: Công việc hiện tại (optional) -->
+            <div class="form-group optional">
+                <label for="current_job">Công việc hiện tại</label>
+                <select id="current_job" name="current_job">
+                    <option value="">Không chọn</option>
+                    <option value="student">Sinh viên</option>
+                    <option value="fresher">Fresher (mới tốt nghiệp)</option>
+                    <option value="junior">Junior (1-2 năm)</option>
+                    <option value="mid">Mid (2-5 năm)</option>
+                    <option value="senior">Senior (5+ năm)</option>
+                    <option value="manager">Quản lý</option>
+                    <option value="freelancer">Tự do</option>
+                    <option value="unemployed">Thất nghiệp</option>
+                    <option value="other">Khác</option>
+                </select>
+                <span class="form-hint">Để AI hiểu context của bạn</span>
+            </div>
+            
+            <!-- Field 7: Số giờ học/ngày (optional) -->
+            <div class="form-group optional">
+                <label for="hours_per_day">Số giờ học/ngày</label>
+                <select id="hours_per_day" name="hours_per_day">
+                    <option value="1-2">1-2 giờ (bận rộn)</option>
+                    <option value="3-4" selected>3-4 giờ (trung bình)</option>
+                    <option value="5-6">5-6 giờ (nhiều thời gian)</option>
+                    <option value="7-8">7-8 giờ (full-time học)</option>
+                    <option value="8+">8+ giờ (intensive)</option>
+                </select>
+                <span class="form-hint">Để phân bổ tasks hợp lý</span>
+            </div>
+            
+            <!-- Field 8: Phong cách học (optional) -->
+            <div class="form-group optional">
+                <label>Phong cách học</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="learning_style" value="video" checked>
+                        <span class="checkbox-custom"></span>
+                        📹 Video
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="learning_style" value="reading" checked>
+                        <span class="checkbox-custom"></span>
+                        📖 Đọc
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="learning_style" value="practice" checked>
+                        <span class="checkbox-custom"></span>
+                        🛠️ Thực hành
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="learning_style" value="community" checked>
+                        <span class="checkbox-custom"></span>
+                        👥 Học nhóm
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="learning_style" value="courses" checked>
+                        <span class="checkbox-custom"></span>
+                        🎓 Khóa học
+                    </label>
+                </div>
+                <span class="form-hint">Chọn nhiều, để AI suggest resources phù hợp</span>
+            </div>
+            
+            <!-- Submit -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-large btn-full" id="submit-btn">
+                    🎯 Tạo roadmap ngay
+                </button>
+                <p class="form-note">Miễn phí · Không cần đăng nhập · ~30 giây</p>
+            </div>
+        </form>
+        
+        <!-- Loading State -->
+        <div id="loading" class="loading" style="display: none;">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h3>AI đang tạo roadmap riêng cho bạn...</h3>
+                <p>Quá trình này có thể mất 10-30 giây</p>
+                <div class="loading-stages">
+                    <div class="stage" id="stage-1">Đang phân tích thông tin...</div>
+                    <div class="stage" id="stage-2">Đang tạo lộ trình tổng thể...</div>
+                    <div class="stage" id="stage-3">Đang tạo chi tiết từng giai đoạn...</div>
+                    <div class="stage" id="stage-4">Đang tạo tasks và bài tập...</div>
+                    <div class="stage" id="stage-5">Đang hoàn thiện roadmap...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
