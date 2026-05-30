@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ai-career-roadmap
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: XIAOMI_API_KEY
+        sync: false
+      - key: XIAOMI_BASE_URL
+        value: https://token-plan-sgp.xiaomimimo.com/v1
+      - key: XIAOMI_MODEL
+        value: mimo-v2-pro
+      - key: DATABASE_URL
+        value: sqlite:///data/roadmaps.db
+      - key: APP_ENV
+        value: production
