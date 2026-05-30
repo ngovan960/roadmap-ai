@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from pathlib import Path
 
 from backend.database import init_database
@@ -45,3 +45,9 @@ async def health_check():
         "version": "1.0.0",
         "service": "AI Career Roadmap"
     }
+
+
+@app.get("/sw.js")
+async def service_worker():
+    """Serve service worker file at root."""
+    return FileResponse("sw.js", media_type="application/javascript")
